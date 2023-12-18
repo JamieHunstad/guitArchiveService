@@ -23,7 +23,7 @@ public class GuitArchiveServiceApplication {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/**")
-							.allowedOrigins("https://guitararchive-app-3f4567fa06fe.herokuapp.com/")
+							.allowedOrigins("https://guitararchive-app-3f4567fa06fe.herokuapp.com")
 							.allowedMethods("GET", "POST", "PUT", "DELETE")
 							.allowedHeaders("*")
 							.allowCredentials(true)
