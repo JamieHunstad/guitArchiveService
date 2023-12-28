@@ -21,10 +21,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/guitar")
 public class GuitarResource {
-    @Value("${azure.storage.account-name}")
-    private String azureAccountName;
-    @Value("${azure.storage.account-key}")
-    private String azureAccountKey;
 
     private final GuitarService guitarService;
     public GuitarResource(GuitarService guitarService){
@@ -60,29 +56,9 @@ public class GuitarResource {
     @PostMapping("/upload")
     @ResponseBody
     public int handleFileUpload(@RequestParam("file") MultipartFile file) {
-
         if (!file.isEmpty()) {
-            try {
-
-                String constr = "AccountName=" + azureAccountName +"; AccountKey=" + azureAccountKey + "; EndpointSuffix=core.windows.net; DefaultEndpointsProtocol=https;";
-
-                BlobContainerClient container = new BlobContainerClientBuilder()
-                        .connectionString(constr)
-                        .containerName("guitarchivecontainer")
-                        .buildClient();
-
-                BlobClient blob = container.getBlobClient(file.getOriginalFilename());
-
-                BlobHttpHeaders headers = new BlobHttpHeaders().setContentType("image");
-                blob.upload(file.getInputStream(), file.getSize(), true);
-                blob.setHttpHeaders(headers);
-
-                return 1;
-            } catch (IOException e) {
-                return 2;
-            }
-        } else {
-            return 3;
+            guitarService.uploadGuitarImage(file);
         }
+        return 3;
     }
 }
