@@ -73,7 +73,9 @@ public class GuitarResource {
 
                 BlobClient blob = container.getBlobClient(file.getOriginalFilename());
 
+                BlobHttpHeaders headers = new BlobHttpHeaders().setContentType("image");
                 blob.upload(file.getInputStream(), file.getSize(), true);
+                blob.setHttpHeaders(headers);
 
                 return 1;
             } catch (IOException e) {
