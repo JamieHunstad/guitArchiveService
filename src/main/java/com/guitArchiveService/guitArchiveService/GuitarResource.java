@@ -58,6 +58,8 @@ public class GuitarResource {
     public int handleFileUpload(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             guitarService.uploadGuitarImage(file);
+        } else {
+            return 1;
         }
         return 3;
     }
